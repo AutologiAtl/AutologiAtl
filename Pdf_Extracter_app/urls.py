@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from .views import logout_view
 from Atl_Dockery import settings
 from .views import (AjaxSaveView, ExcelDownloadView, FileUploadView, FileListView, LoginView, 
-                    MscExcelView, view_files_view,myfun)
+                    MscExcelView, view_files_view,myfun,search_files)
 
 urlpatterns = [
     path('', LoginView.as_view(), name='login'),
@@ -18,6 +18,8 @@ urlpatterns = [
     path('MscExcelView/', MscExcelView.as_view(), name='MscExcelView'),
     path('view_files/<icm>/<icm1>/<excel_download_path>/<file2>/<df1_json>/<excelfile_path>/', view_files_view, name='view_files'),
     path('download/<str:filename>/', myfun, name='download_file'),
+    path('search/', search_files, name='search_files'),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

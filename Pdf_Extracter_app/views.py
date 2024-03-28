@@ -177,26 +177,6 @@ class FileUploadView(LoginRequiredMixin, View):
             return HttpResponseBadRequest("Form data is not valid.")
 
 
-@method_decorator(login_required(login_url='login'), name='dispatch') 
-class FileListView(View):
-    template_name = f'fileupload{sep}list_view.html'
-    paginate_by = 10  # Number of records per page
-
-    def get(self, request, *args, **kwargs):
-        all_data_cursor = submit_col.find()
-        all_data_list = list(all_data_cursor)  # Convert Cursor to list
-
-        # Paginate the queryset
-        paginator = Paginator(all_data_list, self.paginate_by)
-        page_number = request.GET.get('page')
-        page_obj = paginator.get_page(page_number)
-
-        context = {
-            'message': 'Hello, Coming Soon!',
-            "page_obj": page_obj
-        }
-        return render(request, self.template_name, context)
-
 
 def view_files_view(request,icm,icm1,excel_download_path,file2,df1_json,excelfile_path):
     template_name = f'fileupload{sep}outputedit.html'
@@ -523,25 +503,42 @@ def download_file(request):
 def my_view(request):
     return render(request, 'my_template.html')
 
+
+@method_decorator(login_required(login_url='login'), name='dispatch') 
+class FileListView(View):
+    template_name = f'fileupload{sep}list_view.html'
+    paginate_by = 10  # Number of records per page
+    def get(self, request, *args, **kwargs):
+        all_data_cursor = submit_col.find()
+        all_data_list = list(all_data_cursor)
+        query = request.GET.get('search')
+        if query:
+            all_data_list = [data for data in all_data_list if query.lower() in data.get('bookingNo', '').lower()]
+
+        # Paginate the queryset
+        paginator = Paginator(all_data_list, self.paginate_by)
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+        context = {
+            'message': 'Hello, Coming Soon!',
+            "page_obj": page_obj,
+        }
+        return render(request, self.template_name, context)
+
+
+
+
 def myfun(request,filename):
     try:
-        # Static path to the file
         directory_path = r"C:\Users\ATLAnish\Desktop\Abi_projects\docre_5\Altdocre\business_logic\excel_extracter\Excel_output_files"
         
-        # Construct the full file path dynamically
         file_path = os.path.join(directory_path, filename)
         
-        # Open the file in binary mode
         with open(file_path, 'rb') as f:
-            # Read the contents of the file
             file_contents = f.read()
-
-        # Create an HTTP response with the file contents
         response = HttpResponse(file_contents, content_type='application/vnd.ms-excel')
-
-        # Set the Content-Disposition header with the filename
         response['Content-Disposition'] = f'attachment; filename="DR-MSC-20240327-“MSC VIGOUR III” (V. HG410A-4444444444555.xlsx"'
-
         return response
 
     except FileNotFoundError:
@@ -550,6 +547,26 @@ def myfun(request,filename):
         return HttpResponse(f"Error: {e}", status=500)
  
 
+def search_files(request):
+    query = request.GET.get('query')
+    print("query check",query)
 
+    if query:
+        query_filter = {"bookingNo": {"$regex": query, "$options": "i"}}
+        files = submit_col.find(query_filter)
+    else:
+        files = submit_col.find()
 
+    # Convert MongoDB cursor to a list of dictionaries
+    data = []
+    for file in files:
+        data.append({
+            'bookingNo': file['bookingNo'],
+            'bookingCompany': file['bookingCompany'],
+            'shippingCompany': file['shippingCompany'],
+            'createdDate': file['createdDate'],
+            'fullname':file['fullname']
+
+        })
+    return JsonResponse(data, safe=False)
         

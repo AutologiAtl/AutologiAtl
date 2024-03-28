@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,6 +15,24 @@
       align-items: center;
       justify-content: space-between;
     }
+    .form-group{
+        margin-left: auto;
+    }
+    #fileTable th {
+        text-align: center;
+    }
+
+    /* Center align the text in the table cells */
+    #fileTable td {
+        text-align: center;
+    }
+    .t-f{
+        font-size: 13px;
+    }
+    .dwn-btn{
+        width: 104px;
+        font-size: 10px;
+      }
     .file-icon {
       font-size: 15px;
       margin-right: 10px;
@@ -28,15 +47,37 @@
         align-items: flex-start;
       }
     }
+
+    #fileTable th {
+        text-align: center;
+        border: 1px solid #dddddd; 
+        background-color: #f2f2f2; 
+        padding: 8px;
+    }
+
+    #fileTable td {
+        text-align: center;
+        border: 1px solid #dddddd;
+        padding: 8px;
+    }
+
+    #fileTable tbody tr:hover {
+        background-color: #f5f5f5;
+    }
   </style>
 </head>
 <body>
 
 <div class="container mt-4">
   <h2>File List</h2>
+  <form action="" method="GET" style="display: flex;">
+    <div class="form-group">
+      <input type="text" name="search" class="form-control mb-3" placeholder="Search by booking no..">
+    </div>
+    <button type="submit" class="btn btn-primary" style="padding: 1px 25px;height: 35px;margin-left: 5px;">Search</button>
+  </form>
 
-
-  <table class="table">
+  <table class="table" id="fileTable">
     <thead>
       <tr>
         <th>Booking No:</th>
@@ -49,13 +90,13 @@
     <tbody>
       {% for file in page_obj %}
       <tr>
-        <td>{{ file.bookingNo }}</td>
-        <td>{{ file.bookingCompany }}</td>
-        <td>{{ file.shippingCompany }}</td>
-        <td data-created="{{ file.createdDate }}">{{ file.createdDate }}</td>
+        <td class="t-f">{{ file.bookingNo }}</td>
+        <td class="t-f">{{ file.bookingCompany }}</td>
+        <td class="t-f">{{ file.shippingCompany }}</td>
+        <td class="t-f" data-created="{{ file.createdDate }}">{{ file.createdDate }}</td>
         <td>
           {% if file.fullname %}
-          <a href="{% url 'download_file' file.fullname %}" class="btn btn-primary">Download</a>
+          <a href="{% url 'download_file' file.fullname %}" class="btn btn-primary dwn-btn ">Download</a>
           {% endif %}
         </td>
       </tr>
@@ -106,7 +147,7 @@
 </div>
 
 <!-- Bootstrap JS and Font Awesome JS -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
@@ -127,6 +168,32 @@
     });
   });
 </script>
+
+<script>
+    $(document).ready(function() {
+      // Function to perform AJAX search
+      function performSearch(query) {
+        $.ajax({
+          url: '/search',  // Update the URL to your Django view URL for handling search
+          method: 'GET',
+          data: {query: query},
+          success: function(data) {
+              console.log("check data",data);
+            $('#fileTable tbody').html(data);
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            console.log(xhr.responseText);
+          }
+        });
+      }
+  
+      // Event listener for input change
+      $('#searchInput').on('input', function() {
+        var query = $(this).val();
+        performSearch(query);
+      });
+    });
+  </script>
 
 </body>
 </html>
