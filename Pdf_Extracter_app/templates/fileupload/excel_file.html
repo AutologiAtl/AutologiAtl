@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- your_template.html -->
+
+
+<body>
+
+    <div class="text-center">
+        <h1 style="margin-top: -3px;"></h1>
+        <h4 style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase;">
+            {{ message }}</h4>
+        <h4 style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase;">
+            {{ excel_file_name }}</h4>
+
+        <p>Click the link below to download the Excel file: </p>
+        <a href="{% url 'excel_download' %}" download="{{ excel_file_name }}">
+            <button class="btn btn-primary">Download Excel File</button>
+        </a>
+    </div>
+</body>
+
+{% endblock %}

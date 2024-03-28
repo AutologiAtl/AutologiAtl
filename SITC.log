@@ -1,0 +1,17 @@
+2024-03-06 03:34:13,344 - ERROR - Here is the SITC Error 
+None 
+
+cannot access local variable 'bl_issue_from_excel' where it is not associated with a value
+2024-03-07 16:02:20,906 - ERROR - Here is the SITC Error 
+None 
+
+cannot access local variable 'bl_issue_from_excel' where it is not associated with a value
+2024-03-09 06:37:45,194 - ERROR - Here is the SITC Error 
+None 
+
+cannot access local variable 'bl_issue_from_excel' where it is not associated with a value
+2024-03-09 06:37:45,210 - ERROR - Here is the SITC Error 
+
+None 
+
+[Errno 22] Invalid argument: 'C:\\inetpub\\wwwroot\\Atl_Dockeryv2\\business_logic\\excel_extracter\\Excel_output_files\\DR-SITC-20240309-SITC-40HC * 10SITCT24005429.xlsx'

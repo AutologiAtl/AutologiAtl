@@ -1,0 +1,152 @@
+{
+    "file_directory": "",
+    "pdf_files": [
+        {
+            "file_name": "",
+            "coordinates": [
+                {
+                    "label": "Actual Shipper",
+                    "x0": 103,
+                    "y0": 364,
+                    "x1": 557,
+                    "y1": 408
+                },
+                {
+                    "label": "Booking Number",
+                    "x0": 121,
+                    "y0": 164,
+                    "x1": 232,
+                    "y1": 177
+                },
+                {
+                    "label": "Shipping Comp Name",
+                    "x0": 103,
+                    "y0": 521,
+                    "x1": 295,
+                    "y1": 543
+                },
+                {
+                    "label": "Vessel Number",
+                    "x0": 121,
+                    "y0": 150,
+                    "x1": 232,
+                    "y1": 164
+                },
+                {
+                    "label": "Voyage Number",
+                    "x0": 295,
+                    "y0": 150,
+                    "x1": 408,
+                    "y1": 164
+                },
+
+                {
+                    "label": "Port Of Loading",
+                    "x0": 37,
+                    "y0": 191,
+                    "x1": 212,
+                    "y1": 217
+                },
+
+                {
+                    "label": "Port Of Discharge",
+                    "x0": 232,
+                    "y0": 191,
+                    "x1": 408,
+                    "y1": 217
+                },
+                {
+                    "label": "Port Of Receipt",
+                    "x0": 37,
+                    "y0": 191,
+                    "x1": 212,
+                    "y1": 217
+                },
+                {
+                    "label": "Discharge ETA",
+                    "x0": 232,
+                    "y0": 242,
+                    "x1": 408,
+                    "y1": 268
+                },
+                {
+                    "label": "VIA",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "CUT",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "LOADING ETA-ETD",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L PLACE OF ISSUE",
+                    "x0": 103,
+                    "y0": 498,
+                    "x1": 295,
+                    "y1": 509
+                },
+                {
+                    "label": "FREIGHT",
+                    "x0": 319,
+                    "y0": 509,
+                    "x1": 557,
+                    "y1": 521
+                },
+                {
+                    "label": "B/L Copy",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L TYPE",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "SHIPPER",
+                    "x0": 103,
+                    "y0": 293,
+                    "x1": 212,
+                    "y1": 306
+                },
+                {
+                    "label": "CONSIGNEE",
+                    "x0": 103,
+                    "y0": 408,
+                    "x1": 557,
+                    "y1": 453
+                },
+                {
+                    "label": "NOTIFY",
+                    "x0": 103,
+                    "y0": 453,
+                    "x1": 557,
+                    "y1": 499
+                },
+                {
+                    "label": "REMARKS",
+                    "x0": 37,
+                    "y0": 565,
+                    "x1": 408,
+                    "y1": 621
+                }
+            ]
+        }
+    ]
+}

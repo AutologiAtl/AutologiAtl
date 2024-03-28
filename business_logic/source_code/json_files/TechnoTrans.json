@@ -1,0 +1,133 @@
+{
+    "file_directory": "",
+    "pdf_files": [
+        {
+            "file_name": "SJT-WEB13060.pdf",
+            "coordinates": [
+                {
+                    "label": "Shipper",
+                    "x0": 52,
+                    "y0": 262,
+                    "x1": 283,
+                    "y1": 372
+                },
+                {
+                    "label": "Booking Number",
+                    "x0": 268,
+                    "y0": 414,
+                    "x1": 542,
+                    "y1": 447
+                },
+                {
+                    "label": "Shipping Comp Name",
+                    "x0": 269,
+                    "y0": 395,
+                    "x1": 542,
+                    "y1": 415
+                },
+                {
+                    "label": "Vessel Number",
+                    "x0": 215,
+                    "y0": 504,
+                    "x1": 268,
+                    "y1": 529
+                },
+                {
+                    "label": "Voyage Number",
+                    "x0": 52,
+                    "y0": 516,
+                    "x1": 370,
+                    "y1": 529
+                },
+
+                {
+                    "label": "Port Of Loading",
+                    "x0": 52,
+                    "y0": 568,
+                    "x1": 542,
+                    "y1": 578
+                },
+
+                {
+                    "label": "Port Of Receipt",
+                    "x0": 268,
+                    "y0": 394,
+                    "x1": 542,
+                    "y1": 414
+                },
+                {
+                    "label": "Discharge ETA",
+                    "x0": 407,
+                    "y0": 348,
+                    "x1": 536,
+                    "y1": 368
+                },
+                {
+                    "label": "VIA",
+                    "x0": 391,
+                    "y0": 414,
+                    "x1": 570,
+                    "y1": 437
+                },
+                {
+                    "label": "CUT",
+                    "x0": 205,
+                    "y0": 380,
+                    "x1": 391,
+                    "y1": 401
+                },
+                {
+                    "label": "LOADING ETA-ETD",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L PLACE OF ISSUE",
+                    "x0": 145,
+                    "y0": 407,
+                    "x1": 338,
+                    "y1": 473
+                },
+                {
+                    "label": "FREIGHT",
+                    "x0": 132,
+                    "y0": 176,
+                    "x1": 349,
+                    "y1": 187
+                },
+                {
+                    "label": "B/L Copy",
+                    "x0": 508,
+                    "y0": 654,
+                    "x1": 570,
+                    "y1": 667
+                },
+
+                {
+                    "label": "SHIPPER",
+                    "x0": 52,
+                    "y0": 267,
+                    "x1": 269,
+                    "y1": 372
+                },
+                {
+                    "label": "CONSIGNEE",
+                    "x0": 52,
+                    "y0": 383,
+                    "x1": 269,
+                    "y1": 447
+                },
+                {
+                    "label": "NOTIFY",
+                    "x0": 52,
+                    "y0": 458,
+                    "x1": 269,
+                    "y1": 505
+                }
+
+            ]
+        }
+    ]
+}

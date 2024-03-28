@@ -1,0 +1,144 @@
+{
+    "file_directory": "",
+    "pdf_files": [
+        {
+            "file_name": "",
+            "coordinates": [
+                {
+                    "label": "Actual Shipper",
+                    "x0": 78,
+                    "y0": 145,
+                    "x1": 315,
+                    "y1": 207
+                },
+                {
+                    "label": "Booking Number",
+                    "x0": 418,
+                    "y0": 145,
+                    "x1": 515,
+                    "y1": 163
+                },
+                {
+                    "label": "Shipping Comp Name",
+                    "x0": 370,
+                    "y0": 175,
+                    "x1": 515,
+                    "y1": 190
+                },
+                {
+                    "label": "Vessel Number",
+                    "x0": 140,
+                    "y0": 374,
+                    "x1": 315,
+                    "y1": 385
+                },
+                {
+                    "label": "Port Of Loading",
+                    "x0": 140,
+                    "y0": 385,
+                    "x1": 315,
+                    "y1": 398
+                },
+
+                {
+                    "label": "Port Of Discharge",
+                    "x0": 140,
+                    "y0": 385,
+                    "x1": 315,
+                    "y1": 398
+                },
+                {
+                    "label": "Port Of Receipt",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "Discharge ETA",
+                    "x0": 413,
+                    "y0": 290,
+                    "x1": 525,
+                    "y1": 308
+                },
+                {
+                    "label": "VIA",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "CUT",
+                    "x0": 413,
+                    "y0": 247,
+                    "x1": 525,
+                    "y1": 268
+                },
+                {
+                    "label": "LOADING ETA-ETD",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L PLACE OF ISSUE",
+                    "x0": 419,
+                    "y0": 285,
+                    "x1": 515,
+                    "y1": 300
+                },
+                {
+                    "label": "FREIGHT",
+                    "x0": 398,
+                    "y0": 265,
+                    "x1": 515,
+                    "y1": 280
+                },
+                {
+                    "label": "B/L Copy",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L TYPE",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "SHIPPER",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "CONSIGNEE",
+                    "x0": 78,
+                    "y0": 219,
+                    "x1": 315,
+                    "y1": 280
+                },
+                {
+                    "label": "NOTIFY",
+                    "x0": 78,
+                    "y0": 309,
+                    "x1": 315,
+                    "y1": 368
+                },
+                {
+                    "label": "REMARKS",
+                    "x0": 144,
+                    "y0": 225,
+                    "x1": 525,
+                    "y1": 247
+                }
+            ]
+        }
+    ]
+}

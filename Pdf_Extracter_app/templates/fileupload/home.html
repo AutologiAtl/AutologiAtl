@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<style>
+  #loaderOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    /* Keep the background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+
+  #loaderImage {
+    width: 10%;
+    /* Adjust the size as needed */
+    height: 10%;
+    /* Adjust the size as needed */
+    background-size: cover;
+    /* Adjust as needed */
+    animation: moveTruck 1s linear infinite;
+    /* Add animation */
+  }
+
+  @keyframes moveTruck {
+    0% {
+      transform: translateX(-100%);
+    }
+
+    100% {
+      transform: translateX(100%);
+    }
+  }
+</style>
+
+<div class="text-center">
+  <br>
+  <h4 style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-transform: uppercase;">
+    Create DocRE
+  </h4>
+</div>
+
+<div class="container-fluid">
+  <div class="col-md-6 offset-md-3 mt-5">
+    <!-- # tagate ='_blank' #add in from at the end for every times open new page -->
+    <form accept-charset="UTF-8" action="{% url 'file_upload' %}" method="POST" enctype="multipart/form-data"
+      id="uploadForm">
+      {% csrf_token %}
+
+      <div id="loaderOverlay">
+        <img src='{% static "logo/truck.png" %}' alt="Loading" id="loaderImage">
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Client:</label>
+            <select name="form-select" class="form-control sm select2 mt-2" id="clientselect" required>
+              <option value="" disabled selected>Select Client</option>
+              <option value="ICM">ICM</option>
+              <option value="SBT">SBT</option>
+              <option value="karmen">Karmen</option>
+              <option value="AutoCom Japan">AutoCom Japan</option>
+              <option value="AutoCraft">AutoCraft Japan</option>
+              <option value="Autologistics">Autologistics Japan</option>
+              <option value="matsudaTrading">Matsuda Trading</option>
+              <option value="matsudaTrading">Heiwa Auto</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6" style="margin-top: 35px;">
+          <div class="form-group">
+            <!-- <label for="exampleCheckbox">Mediator:</label> -->
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="exampleCheckbox" onchange="toggleDropdown()">
+              <label class="form-check-label" for="exampleCheckbox">
+                Include Mediator
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div id="bookingAgentDropdown" class="col-md-6 mt-2">
+          <!-- Default Booking Agent / Mediator dropdown -->
+          <div class="form-group">
+            <label for="exampleFormControlSelect1">Booking Agent :</label>
+            <select name="form-select-sm" class="form-control mt-2" id="bookingAgentSelect" required>
+              <option value="" disabled selected>Select Booking Agent</option>
+              <option value="MSC">MSC</option>
+              <option value="one">ONE</option>
+              <option value="sitc">SITC</option>
+              <option value="cosco">COSCO</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mt-2">
+            <label class="mr-2">Custom's File:</label>
+            <input type="file" name="file1" accept=".pdf" multiple required>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-md-6">
+          <div class="form-group mt-2">
+            <label class="mr-2">DR/SI:</label>
+            <input type="file" name="file2" accept=".pdf">
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="col-md-6">
+          <div class="form-group mt-2">
+            <label class="mr-2">Excel File:</label>
+            <input type="file" name="file3" accept=".xlsx" multiple required>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" id="uploadBtn">Upload</button>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#loaderOverlay").hide();  // Hide the loader initially
+
+    $("#uploadForm").submit(function () {
+      // Show loader overlay on the entire page
+      $("#loaderOverlay").show();
+
+      // Disable the "Upload" button
+      $("#uploadBtn").prop("disabled", true);
+    });
+  });
+</script>
+
+<script>
+function toggleDropdown() {
+    var checkbox = document.getElementById("exampleCheckbox");
+    var bookingAgentDropdown = document.getElementById("bookingAgentDropdown");
+    if (checkbox.checked) {
+        // Remove Booking Agent / Mediator dropdown
+        bookingAgentDropdown.innerHTML = '';
+        // Add new dropdowns
+        var dropdownContainer = document.createElement("div");
+        dropdownContainer.className = "form-group";
+        dropdownContainer.innerHTML = `
+            <label for="exampleFormControlSelect1">Booking Agent:</label>
+            <select name="form-select-sm" class="form-control mt-2" id="bookingcheck" required>
+                <option value="" disabled selected>Select Booking Agent</option>
+                <option value="MarineServices">Marine services</option>
+                <option value="Sync">Sync Logistics</option>
+                <option value="Sync2">Sync Logistics (COSCO/SITC)</option>
+                <option value="Atlas">Atlas</option>
+                <option value="BestShipping">Best Shipping</option>
+                <option value="Atlas(msc)">Atlas (MSC)</option>
+                <option value="Centrowide">Centrowide</option>
+                <option value="Techno">Techno Trans</option>
+                <option value="Prosperity">Prosperity</option>
+                <option value="Apex">Apex</option>
+            </select>
+        `;
+        bookingAgentDropdown.appendChild(dropdownContainer);
+        // Initialize Select2
+        $('#bookingcheck').select2({
+            placeholder: 'Select Booking Agent',
+            allowClear: true,
+            closeOnSelect: true,
+            matcher: function(params, data) {
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+                if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
+                    return data;
+                }
+                return null;
+            }
+        });
+    } else {
+        // Remove Booking Agent / Mediator dropdown
+        bookingAgentDropdown.innerHTML = '';
+        // Add default dropdown
+        var defaultDropdown = document.createElement("div");
+        defaultDropdown.className = "form-group";
+        defaultDropdown.innerHTML = `
+            <label for="exampleFormControlSelect1">Booking Agent:</label>
+            <select name="form-select-sm" class="form-control mt-2" id="bookingAgentDropdown" required>
+                <option value="" disabled selected>Select Booking Agent</option>
+                <option value="msc">MSC</option>
+                <option value="one">ONE</option>
+                <option value="sitc">SITC</option>
+                <option value="cosco">COSCO</option>
+            </select>
+        `;
+        bookingAgentDropdown.appendChild(defaultDropdown);
+        // Initialize Select2 for default dropdown
+        $('#bookingAgentDropdown select').select2({
+            placeholder: 'Select Booking Agent',
+            allowClear: true,
+            closeOnSelect: true,
+            matcher: function(params, data) {
+                if ($.trim(params.term) === '') {
+                    return data;
+                }
+                if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
+                    return data;
+                }
+                return null;
+            }
+        });
+    }
+}
+
+</script>
+
+
+<script>
+ $(document).ready(function() {
+    $('#bookingAgentSelect').select2({
+        placeholder: 'Select Booking Agent',
+        allowClear: true,
+        closeOnSelect: true,
+        matcher: function(params, data) {
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+            if (typeof data.text === 'undefined') {
+                return null;
+            }
+            if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
+                return data;
+            }
+            return null;
+        }
+    });
+});
+
+
+
+
+$(document).ready(function() {
+    $('#clientselect').select2({
+        placeholder: 'Select Client',
+        allowClear: true,
+        closeOnSelect: true,
+        matcher: function(params, data) {
+            if ($.trim(params.term) === '') {
+                return data;
+            }
+            if (typeof data.text === 'undefined') {
+                return null;
+            }
+            if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
+                return data;
+            }
+            return null;
+        }
+    });
+});
+
+</script>
+
+
+
+{% endblock %}

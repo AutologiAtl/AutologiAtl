@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+#df2.table-responsive {
+    border: 2px solid #ddd;
+    padding: 5px;
+}
+
+/* Additional styles for the spinner */
+#spinner {
+    display: none;
+    /* Initially hide the spinner */
+    margin-left: 8px;
+    /* Adjust the margin as needed */
+}
+
+.main-container {
+    width: 100%;
+    overflow: hidden;
+    /* Clear any floated elements within the container */
+    display: flex;
+    border: 2px solid #ddd;
+    padding: 5px;
+}
+
+.image-column {
+    flex: 0 0 60%;
+    /* 60% width, don't grow, don't shrink */
+    box-sizing: border-box;
+}
+
+.table-responsive {
+    flex: 0 0 40%;
+    /* 40% width, don't grow, don't shrink */
+    overflow-y: auto;
+    /* Make the data column scrollable */
+    max-height: 85vh;
+    /* Set a maximum height for the data column */
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+/* Add some styles for better visibility */
+.image-column {
+    background-color: #f2f2f2;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+img {
+    width: 100%;
+    height: auto;
+    /* display: block; */
+}
+
+.arrow-icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: #3498db;
+    cursor: pointer;
+}
+
+.arrow-icon.left {
+    left: 18px;
+}
+
+.arrow-icon.right {
+    right: 18px;
+}
+
+#image-index {
+    text-align: center;
+    margin-top: 10px;
+}
+
+@media (max-width: 767px) {
+    .main-container {
+        flex-direction: column;
+        /* Stack columns on top of each other on smaller screens */
+    }
+
+    .image-column {
+        width: 100%;
+        /* Make columns take full width on smaller screens */
+    }
+}

@@ -1,0 +1,158 @@
+<!-- fileupload/templates/fileupload/view_files.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- <h2>Measho Text Extract</h2> -->
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-bordered table-light">
+            <thead class="thead-light">
+                <h2>Measho Text Extract</h2>
+                <tr>
+                    <th scope="col">Registration_no</th>
+                    <th scope="col">Registration_date</th>
+                    <th scope="col">First_registration_date</th>
+                    <th scope="col">Makers_serial_no</th>
+                    <th scope="col">Trade_maker_vehicle</th>
+                    <th scope="col">Engine_model</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in df1_html %}
+                <tr>
+                    {% for k, v in i.items %}
+                    <td>
+                        <input type="text" class="form-control" value="{{v}}">
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!--  ICM Output -->
+    <hr>
+    <div class="row">
+        <h2>ICM Output</h2>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" style="width: 30%;">Label</th>
+                <th scope="col" style="width: 70%;">Content</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in df2_html %}
+            <tr>
+                {% for k, v in i.items %}
+                {% if k == 'Label' %}
+                <td>
+                    <input type="text" class="form-control" value="{{v}}" readonly>
+                </td>
+                {% endif %}
+                {% if k == 'Content' %}
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" value="{{v}}">
+                    </div>
+                </td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <!-- <h2>Marine services</h2> -->
+    <hr>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-light">
+                <h2>Marine services</h2>
+                <tr>
+                    <th scope="col">Serial No.</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Maker</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Recno.</th>
+                    <th scope="col">Chassis No.</th>
+                    <th scope="col">Weight</th>
+                    <th scope="col">Length</th>
+                    <th scope="col">Width</th>
+                    <th scope="col">Height</th>
+                    <th scope="col">MEAS</th>
+                    <th scope="col">DISP</th>
+                    <th scope="col">Fuel</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Seat</th>
+                    <th scope="col">C/F</th>
+                    <th scope="col">Engine Power</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in df3_html %}
+                <tr>
+                    {% for k, v in i.items %}
+                    <td>
+                        <input type="text" class="form-control" value="{{v}}" readonly>
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <button class="btn btn-primary" onclick="updateTables()">Update All Tables</button>
+</div>
+</div>
+
+{% endblock %}
+
+<script>
+    function updateTables() {
+        const inputs = document.querySelectorAll('input[data-table]');
+        const data = {};
+
+        inputs.forEach((input) => {
+            const tableName = input.getAttribute('data-table');
+            const rowIndex = input.getAttribute('data-row');
+            const columnIndex = input.getAttribute('data-column');
+            const value = input.value;
+
+            if (!data[tableName]) {
+                data[tableName] = [];
+            }
+
+            if (!data[tableName][rowIndex]) {
+                data[tableName][rowIndex] = {};
+            }
+
+            data[tableName][rowIndex][columnIndex] = value;
+        });
+
+        // Fetch API example:
+        fetch('/update_data/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken'), // Make sure to include the CSRF token
+            },
+            body: JSON.stringify({ data: data }),
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('Data updated successfully:', result);
+            // Redirect to the update_data endpoint
+            window.location.href = 'http://127.0.0.1:8000/file/update_data/';
+        })
+        .catch(error => {
+            console.error('Error updating data:', error);
+            // Handle errors or provide user feedback as needed
+        });
+    }
+  </script>

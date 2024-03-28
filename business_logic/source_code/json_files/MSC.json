@@ -1,0 +1,152 @@
+{
+    "file_directory": "",
+    "pdf_files": [
+        {
+            "file_name": "",
+            "coordinates": [
+                {
+                    "label": "Actual Shipper",
+                    "x0": 155,
+                    "y0": 311,
+                    "x1": 582,
+                    "y1": 349
+                },
+                {
+                    "label": "Booking Number",
+                    "x0": 156,
+                    "y0": 220,
+                    "x1": 244,
+                    "y1": 246
+                },
+                {
+                    "label": "Shipping Comp Name",
+                    "x0": 20,
+                    "y0": 146,
+                    "x1": 43,
+                    "y1": 159
+                },
+                {
+                    "label": "Vessel Number",
+                    "x0": 150,
+                    "y0": 459,
+                    "x1": 329,
+                    "y1": 472
+                },
+                {
+                    "label": "Voyage Number",
+                    "x0": 446,
+                    "y0": 459,
+                    "x1": 582,
+                    "y1": 472
+                },
+
+                {
+                    "label": "Port Of Loading",
+                    "x0": 150,
+                    "y0": 447,
+                    "x1": 329,
+                    "y1": 459
+                },
+
+                {
+                    "label": "Port Of Discharge",
+                    "x0": 150,
+                    "y0": 522,
+                    "x1": 329,
+                    "y1": 535
+                },
+                {
+                    "label": "Port Of Receipt",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "Discharge ETA",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "VIA",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "CUT",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "LOADING ETA-ETD",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L PLACE OF ISSUE",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "FREIGHT",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L Copy",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L TYPE",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "SHIPPER",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "CONSIGNEE",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "NOTIFY",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "REMARKS",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                }
+            ]
+        }
+    ]
+}

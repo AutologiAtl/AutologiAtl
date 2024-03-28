@@ -1,0 +1,521 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% load static %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    /* Additional styles for the spinner */
+    #spinner {
+        display: none;
+        /* Initially hide the spinner */
+        margin-left: 8px;
+        /* Adjust the margin as needed */
+    }
+
+    .main-container {
+        width: 100%;
+        overflow: hidden;
+        /* Clear any floated elements within the container */
+        display: flex;
+        border: 2px solid #ddd;
+        padding: 5px;
+    }
+
+    .image-column {
+        flex: 0 0 60%;
+        /* 60% width, don't grow, don't shrink */
+        box-sizing: border-box;
+    }
+
+    .table-responsive {
+        flex: 0 0 40%;
+        /* 40% width, don't grow, don't shrink */
+        overflow-y: auto;
+        /* Make the data column scrollable */
+        max-height: 85vh;
+        /* Set a maximum height for the data column */
+        box-sizing: border-box;
+        padding: 20px;
+        border: 2px solid #ddd;
+    }
+
+    /* Add some styles for better visibility */
+    .image-column {
+        background-color: #f2f2f2;
+    }
+
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+        /* display: block; */
+    }
+
+    .arrow-icon {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 30px;
+        color: #3498db;
+        cursor: pointer;
+    }
+
+    .arrow-icon.left {
+        left: 18px;
+    }
+
+    .arrow-icon.right {
+        right: 18px;
+    }
+
+    #image-index {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    @media (max-width: 767px) {
+        .main-container {
+            flex-direction: column;
+            /* Stack columns on top of each other on smaller screens */
+        }
+
+        .image-column {
+            width: 100%;
+            /* Make columns take full width on smaller screens */
+        }
+    }
+</style>
+
+</head>
+
+<body>
+    <div>
+        <h5
+            style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-align: center; text-transform: uppercase; margin-top: 2%;">
+            Masho Extraction
+        </h5>
+    </div>
+    <div class="main-container clearfix">
+        <div class="image-column">
+
+            <div class="arrow-icon left" onclick="showPrevious()">&#9665;</div>
+            <!-- Content for the image column goes here -->
+            <img id="current-photo" src='{% static "images/page_3.png" %}' alt="Your Image Description">
+            <div class="arrow-icon right" onclick="showNext()">&#9655;</div>
+        </div>
+        <div class="table-responsive">
+            <div class="pr-column" id="image-count"></div>
+        </div>
+        <!-- Add more pr-columns as needed -->
+    </div>
+    <div id="image-index"></div>
+
+
+    <!-- </div> -->
+
+    <script>
+        // Array of photo URLs and data entries
+        const photos = [
+            '{% static "images/page_1.png" %}',
+            '{% static "images/page_2.png" %}',
+            '{% static "images/page_3.png" %}',
+            '{% static "images/page_4.png" %}',
+            '{% static "images/page_5.png" %}',
+            
+            // Add more photo URLs as needed
+        ];
+
+        const data = '{{ df1_html | safe }}';
+        const parsedData = JSON.parse(data);
+
+        let currentPhotoIndex = 0;
+        const currentPhotoElement = document.getElementById('current-photo');
+        const prColumnElement = document.getElementById('image-count');
+        const imageIndexElement = document.getElementById('image-index');
+
+        function showPrevious() {
+            currentPhotoIndex = (currentPhotoIndex - 1 + photos.length) % photos.length;
+            updateCurrentPhoto();
+        }
+
+        function showNext() {
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            updateCurrentPhoto();
+        }
+
+        function updateCurrentPhoto() {
+            currentPhotoElement.src = photos[currentPhotoIndex];
+            const currentData = parsedData[currentPhotoIndex];
+            console.log("currentData",currentData)
+            const currentDataKeys = Object.keys(currentData);
+            const currentDataValues = currentData[currentDataKeys[0]];
+            console.log("currentDataValues",currentDataValues)
+
+            let tableHTML = '<table id="table1" class="table table-bordered table-light"><thead class="thead-light"></thead><tbody>';
+
+            for (const [key, value] of Object.entries(currentDataValues)) {
+                tableHTML += `<tr><td>${key}</td><td><input type="text" value="${value !== null ? value : ''}" oninput="updateValue('${key}', this.value)"></td></tr>`;
+            }
+
+            tableHTML += '</tbody></table>';
+            prColumnElement.innerHTML = tableHTML;
+
+
+            /// Update image index
+            const imageIndexText = `< Masho ${currentPhotoIndex + 1} of ${photos.length} >`;
+            imageIndexElement.innerText = imageIndexText;
+
+            // let tableHTML = '<table id="table1" class="table table-bordered table-light"><thead class="thead-light"></thead><tbody><tr> ';
+
+            // for (const [key, value] of Object.entries(currentDataValues)) {
+            //     tableHTML += `<td>${key}</td><td><input type="text" value="${value !== null ? value : ''}" oninput="updateValue('${key}', this.value)"></td>`;
+            // }
+
+            // tableHTML += '</tr></tbody></table>';
+            // prColumnElement.innerHTML = tableHTML;
+        }
+
+
+        function updateValue(key, newValue) {
+            parsedData[currentPhotoIndex][currentDataKeys[0]][key] = newValue;
+        }
+        // Initial update
+        updateCurrentPhoto();
+    </script>
+
+    <hr>
+    <!--  ICM Output -->
+    <div class="row">
+        <h5
+            style="color: #3498db; margin-top: 1%; font-family: 'Arial', sans-serif; font-weight: bold; text-align: center; text-transform: uppercase;">
+            SERVICE INSTRUCTION
+        </h5>
+    </div>
+    <div class="table-responsive">
+        <table id="table2" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 30%;">Label</th>
+                    <th scope="col" style="width: 70%;">Content</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in df2_html %}
+                <tr style="border: 1px solid #ddd; padding: 2px;">
+                    {% for k, v in i.items %}
+                    {% if k == 'Label' %}
+                    <td class="form-control" style="font-size: 14px; padding-left: 8px;">{{ v }}</td>
+                    {% endif %}
+                    {% if k == 'Content' %}
+                    <td style="padding: 2px;">
+                        <div class="form-group" style="margin-top: 2px;">
+                            {% if v|length > 100 %}
+                            <textarea class="form-control" style="padding: 2px; font-size: 14px; padding-left: 8px;"
+                                rows="6">{{ v }}</textarea>
+                            {% else %}
+                            <input type="text" class="form-control" value="{{ v }}"
+                                style="padding: 2px; font-size: 14px; padding-left: 8px;">
+                            {% endif %}
+                        </div>
+                    </td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- <h2>Marine services</h2> -->
+    <style>
+        td {
+            border: 1px solid #000;
+            white-space: nowrap;
+            /* width: auto; */
+        }
+
+        .block-datatext {
+            height: 25px;
+            background-color: #f2f2f2;
+        }
+    </style>
+    <br>
+    <hr>
+
+    <div class="table-responsive" style="margin-top: 5px;">
+        <table id="table3" class="table table-light table-striped table-hover ">
+            <thead class="thead-light">
+                <h5
+                    style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-align: center; text-transform: uppercase;">
+                    Invoice Table Extraction
+                </h5>
+                <tr>
+                    {% for column in columns %}
+                    <th scope="col">{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in df3_html %}
+                <tr>
+                    {% for k, v in i.items %}
+                    <td class="block-datatext" style="padding: 2px; font-size: 14px; text-align: center;">
+                        {{v}}
+                        <!-- <input type="text" class="input_text_css" value="{{v}}" readonly> -->
+                    </td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div>
+        <button id="saveData" class="btn btn-primary mb-3 mt-3">
+            Submit
+        </button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- # Navigate masho Images -->
+    <!-- # redirect the MscExcelView -->
+    <script>
+        document.getElementById('saveData').addEventListener('click', function () {
+            // Redirect to MscExcelView
+            // window.location.href = '{% url "MscExcelView" %}';
+        });
+    </script>
+
+    <!-- ## Extracting the tables data and making the payload dict to pass an react api  -->
+
+    <script>
+        $(document).ready(function () {
+            // Declare tableData outside the click handler
+            var tableData = {};
+
+            var data_ = [];
+            $('#table3 td').each(function () {
+                data_.push($(this).text());
+            });
+
+            var newArray = $.map(data_, function (value) {
+                return value.replace(/[\n\s]/g, '')
+            });
+
+            // Intercept the button click event
+            $("#saveData").click(function () {
+                tableData = {
+                    'table1_data': collectTableData('#table1 input'),
+                    'table2_data': collectTable2Data(),
+                    'table3_data': newArray
+                    // Add more tables as needed
+                };
+
+                function collectTableData(selector) {
+                    // Collect data from the specified input fields within a table
+                    var tableData = [];
+                    $(selector).each(function () {
+                        tableData.push($(this).val());
+                    });
+                    return tableData;
+                }
+
+                function collectTable2Data() {
+                    // Collect data from both input and textarea for table2
+                    var table2Data = [];
+                    $('#table2 tbody tr').each(function () {
+                        var label = $(this).find('td:eq(0)').text().trim();
+                        var content = $(this).find('td:eq(1) :input').val() || $(this).find('td:eq(1)').text().trim();
+
+                        var rowData = {
+                            'label': label,
+                            'content': content
+                        };
+
+                        table2Data.push(rowData);
+                    });
+                    return table2Data;
+                }
+
+                console.log("---------tableData-------------", tableData)
+
+
+                // >>--------------- Converting the table1Data into the payload ---------------<<
+                var table1Data = tableData.table1_data;
+
+                // Define the keys for each column
+                var keysTable1 = ["Registration_no", "Registration_date", "First_registration_date", "Makers_serial_no", "Trade_maker_vehicle", "Engine_model"];
+
+                // Initialize an array to store the payloads for each row
+                var table1Payload = [];
+
+                // Calculate the number of rows based on the number of keys
+                var numRowsTable1 = table1Data.length / keysTable1.length;
+
+                // Loop through each row
+                for (var rowIndexTable1 = 0; rowIndexTable1 < numRowsTable1; rowIndexTable1++) {
+                    var rowPayloadTable1 = {};
+
+                    // Loop through each key in the keysTable1 array
+                    for (var keyIndexTable1 = 0; keyIndexTable1 < keysTable1.length; keyIndexTable1++) {
+                        // Calculate the index in table1Data based on rowIndexTable1 and keyIndexTable1
+                        var dataIndexTable1 = rowIndexTable1 * keysTable1.length + keyIndexTable1;
+
+                        // Add the key-value pair to rowPayloadTable1
+                        rowPayloadTable1[keysTable1[keyIndexTable1]] = table1Data[dataIndexTable1];
+                    }
+
+                    // Add the transformed entry to the array
+                    table1Payload.push(rowPayloadTable1);
+                }
+
+                // Now 'table1Payload' contains the desired format for each row in table1_data
+                // console.log("table 1=======>>", table1Payload);
+
+                // >>--------------- Converting the table2Data into the payload ---------------<<
+                var table2Data = tableData.table2_data;
+                var bookingConformationPayload = {};
+
+                console.log("tabletodata", table2Data)
+
+                // Define the keys for each column in the desired format
+                var keysTable2 = {
+                    'Actual Shipper': 'ActualShipper',
+                    'Booking Number': 'BookingNumber',
+                    'Vessel Number': 'Vessel_and_voyage_no',
+                    'B/L Original': 'B/LOriginal',
+                    'Port Of Loading': 'PortOfLoading',
+                    'Place Of Delivery': 'PlaceOfDelivery',
+                    'Port Of Discharge': 'PortOfDischarge',
+                    'Port Of Receipt': 'PortOfReceipt',
+                    'FREIGHT': 'Freight',
+                    'B/L PLACE OF ISSUE': 'B/LPlaceOfIssue',
+                    'SHIPPER': 'shipper',
+                    'CONSIGNEE': 'consignee',
+                    'NOTIFY': 'notify'
+                };
+
+                // Loop through each row of table2_data
+                for (var i = 0; i < table2Data.length; i += 1) {
+                    var label = table2Data[i].label;
+                    var content = table2Data[i].content;
+
+                    // Find the corresponding key for the label
+                    var key = keysTable2[label];
+
+                    // If a matching key is found, add the content to the corresponding key in the payload
+                    if (key) {
+                        bookingConformationPayload[key] = content;
+                    }
+                }
+
+                // Now 'bookingConformationPayload' contains the desired format
+                // console.log("Table 2: ", bookingConformationPayload);
+
+                // >>--------------- Converting the table3Data into the payload ---------------<<
+                var table3Data = tableData.table3_data;
+
+                var keys = Array.from(document.getElementById('table3').getElementsByTagName('th'), th => th.textContent);
+
+                // var keys = [];
+
+                // Get the collection of thead elements with id 'table3'
+                // var theadCollection = document.getElementById('table3').getElementsByTagName('thead');
+
+                // // Loop through each thead element
+                // for (var i = 0; i < theadCollection.length; i++) {
+                //     // Get the current thead element
+                //     var thead = theadCollection[i];
+
+                //     // Get the collection of th elements within the current thead
+                //     var thElements = thead.getElementsByTagName('th');
+                //     key = {};
+                //     // Loop through each th element
+                //     for (var j = 0; j < thElements.length; j++) {
+                //         // Get the current th element
+                //         var currentThElement = thElements[j];
+
+                //         // Use the text content of the th as the key in the object
+                //         var key = currentThElement.textContent;
+                        
+                //         keys.push(key);
+                //     }
+                //     console.log('key',key)
+                // }
+                // console.log('keys',keys)
+
+                // Initialize an array to store the payloads for each row
+                var table3Payload = [];
+                // Calculate the number of rows based on the number of keys
+                var numRows = table3Data.length / keys.length;
+                // Loop through each row
+                for (var rowIndex = 0; rowIndex < numRows; rowIndex++) {
+                    var rowPayload = {};
+
+                    // Loop through each key in the keys array
+                    for (var keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+                        // Add the key-value pair to rowPayload
+                        rowPayload[keys[keyIndex]] = table3Data[rowIndex][keys[keyIndex]];
+                    }
+
+                    // Add the transformed entry to the array
+                    table3Payload.push(rowPayload);
+                }
+
+                console.log("table3Payload", table3Payload);
+
+                var client = '{{ icm }}';
+                var mediator = '{{ icm1 }}';
+                var shipping_comp_name = '{{shipping_comp_name}}';
+                const payload = {
+
+                    "Client_Company": client,
+                    "booking_comp_name": mediator,
+                    // "shipping_comp_name": shipping_comp_name,
+                    "shipping_comp_name": 'MSC',
+
+                    "booking_conformation":
+                        bookingConformationPayload
+                    ,
+                    "Invoice":
+                        table3Payload
+                    ,
+                    "Masho":
+                        table1Payload
+
+                };
+                console.log("payload", payload);
+
+                // Send data to the server using AJAX
+                $.ajax({
+                    type: 'POST',
+                    url: '/update_data/',
+                    data: JSON.stringify({ payload: payload }, (key, value) => (typeof value === 'string' ? value.replace(/'/g, '"') : value), 2),
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+                        console.log('Data successfully submitted:', data);
+                    },
+                    error: function (error) {
+                        console.log('Error:', error);
+                    }
+                });
+
+            });
+        });
+    </script>
+
+
+    {% endblock %}

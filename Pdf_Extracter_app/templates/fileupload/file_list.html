@@ -1,0 +1,11 @@
+<!-- fileupload/templates/fileupload/file_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>File List</h2>
+  <ul>
+    {% for file in files %}
+      <li>{{ file.file1.name }} / {{ file.file2.name }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

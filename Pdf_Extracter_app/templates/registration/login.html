@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Design by foolishdeveloper.com -->
+  <title>Login Page</title>
+  {% load static %}
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+  <!--Stylesheet-->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/style1.css' %}">
+</head>
+
+<body>
+  <!-- {% if messages %}
+    {% for message in messages %}
+      {% if message.tags == "error" %}
+        <div class="alert alert-info" role="alert">
+          {{message}}
+        </div>
+        {% else %}
+        <div class="alert alert-success" role="alert">
+          {{message}}
+        </div>
+      {% endif %}
+    {% endfor %}
+  {% endif %} -->
+  <form method="post" action="{% url 'login' %}">
+    <img src='{% static "logo/logo.png" %}' alt="Logo"
+      style="display: block; margin: 0 auto; width: 150px; height: auto;">
+    <h3
+      style="color: #3498db; font-family: 'Arial', sans-serif; font-weight: bold; text-align: center; text-transform: uppercase;">
+      Login
+    </h3>
+    {% csrf_token %}
+        {% if messages %}
+          {% for message in messages %}
+            {% if message.tags == "error" %}
+              <div class="alert alert-info" role="alert">
+                {{message}}
+              </div>
+              {% else %}
+              <div class="alert alert-success" role="alert">
+                {{message}}
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+    {{ form.as_p }}
+    <button type="submit" class="button" style="width: -webkit-fill-available;">Login</button>
+
+  </form>
+  </body>
+
+</html>

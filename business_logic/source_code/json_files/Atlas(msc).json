@@ -1,0 +1,145 @@
+{
+    "file_directory": "",
+    "pdf_files": [
+        {
+            "file_name": "",
+            "coordinates": [
+                {
+                    "label": "Actual Shipper",
+                    "x0": 230,
+                    "y0": 395,
+                    "x1": 531,
+                    "y1": 470
+                },
+                {
+                    "label": "Booking Number",
+                    "x0": 138,
+                    "y0": 769,
+                    "x1": 328,
+                    "y1": 784
+                },
+                {
+                    "label": "Shipping Comp Name",
+                    "x0": 285,
+                    "y0": 277,
+                    "x1": 347,
+                    "y1": 291
+                },
+                {
+                    "label": "Vessel Number",
+                    "x0": 155,
+                    "y0": 172,
+                    "x1": 325,
+                    "y1": 185
+                },
+
+                {
+                    "label": "Port Of Loading",
+                    "x0": 81,
+                    "y0": 351,
+                    "x1": 329,
+                    "y1": 365
+                },
+                {
+                    "label": "Place Of Delivery",
+                    "x0": 350,
+                    "y0": 646,
+                    "x1": 475,
+                    "y1": 659
+                },
+
+                {
+                    "label": "Port Of Discharge",
+                    "x0": 254,
+                    "y0": 646,
+                    "x1": 315,
+                    "y1": 659
+                },
+                {
+                    "label": "Port Of Receipt",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "Discharge ETA",
+                    "x0": 407,
+                    "y0": 348,
+                    "x1": 536,
+                    "y1": 368
+                },
+                {
+                    "label": "VIA",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "LOADING ETA-ETD",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L PLACE OF ISSUE",
+                    "x0": 230,
+                    "y0": 576,
+                    "x1": 531,
+                    "y1": 592
+                },
+                {
+                    "label": "FREIGHT",
+                    "x0": 230,
+                    "y0": 609,
+                    "x1": 531,
+                    "y1": 627
+                },
+                {
+                    "label": "B/L Copy",
+                    "x0": 1,
+                    "y0": 1,
+                    "x1": 3,
+                    "y1": 3
+                },
+                {
+                    "label": "B/L TYPE",
+                    "x0": 407,
+                    "y0": 452,
+                    "x1": 536,
+                    "y1": 478
+                },
+                {
+                    "label": "SHIPPER",
+                    "x0": 157,
+                    "y0": 140,
+                    "x1": 280,
+                    "y1": 155
+                },
+                {
+                    "label": "CONSIGNEE",
+                    "x0": 230,
+                    "y0": 470,
+                    "x1": 530,
+                    "y1": 576
+                },
+                {
+                    "label": "NOTIFY",
+                    "x0": 230,
+                    "y0": 470,
+                    "x1": 530,
+                    "y1": 576
+                },
+                {
+                    "label": "REMARKS",
+                    "x0": 60,
+                    "y0": 784,
+                    "x1": 548,
+                    "y1": 842
+                }
+            ]
+        }
+    ]
+}
