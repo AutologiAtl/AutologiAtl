@@ -35,6 +35,8 @@ from django.core.paginator import Paginator
 
 # Connect to MongoDB
 client = MongoClient('mongodb://localhost:27017/')
+
+
 db = client['docre']
 collection = db['Pdf_Extracter_app_uploaduserdata']
 submit_col = db['Pdf_Extracter_app_submituserinfo']
