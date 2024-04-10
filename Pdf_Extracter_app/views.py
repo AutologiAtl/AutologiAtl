@@ -44,7 +44,6 @@ from datetime import datetime
 created_date_utc = datetime.utcnow()
 sep = os.path.sep
 path = os.getcwd()
-
 class LoginView(View):
     template_name = f'registration{sep}login.html'  # Your login template
 
@@ -94,15 +93,14 @@ class FileUploadView(LoginRequiredMixin, View):
                         proc.kill()
             except Exception:
                 pass
-    
+
     def get(self, request):
         form = FileUploadForm()
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        print("check data")
         form = FileUploadForm(request.POST, request.FILES)
-        if form:
+        if form.is_valid():
             icm = request.POST.get('form-select')
             icm1 = request.POST.get('form-select-sm')
             file1 = request.FILES.get('file1')
@@ -113,17 +111,17 @@ class FileUploadView(LoginRequiredMixin, View):
                 "id": ObjectId(),
                 "user": str(request.user),
                 "client": str(icm),
-                "agent":str(icm1),
+                "agent": str(icm1),
                 "customFile": str(file1),
                 "drFile": str(file2),
-                "excelFile":str(file3)
+                "excelFile": str(file3)
             }
             collection.insert_one(data1)
 
             pdfs_All_files_paths = []
-            pdfs_download_path = os.path.join(path, f'media','uploads')
+            pdfs_download_path = os.path.join(path, f'media', 'uploads')
             os.makedirs(pdfs_download_path, exist_ok=True)
-            
+
             for file in request.FILES.getlist('file1'):
                 pdf_file_path = os.path.join(pdfs_download_path, file.name)
                 pdfs_All_files_paths.append(pdf_file_path)
@@ -152,18 +150,17 @@ class FileUploadView(LoginRequiredMixin, View):
 
             # Create the directory again
             os.makedirs(excel_download_path, exist_ok=True)
-            
+
             for file in request.FILES.getlist('file3'):
                 excelfile_path = os.path.join(excel_download_path, file.name)
                 excel_All_files_paths.append(excelfile_path)
                 with open(excelfile_path, 'wb+') as destination:
                     for chunk in file.chunks():
                         destination.write(chunk)
-                        
-            print("multipe files",'\n',excel_All_files_paths)
-            main = Main_Class(icm, icm1, pdf_file_path,file2)
+
+            main = Main_Class(icm, icm1, pdf_file_path, file2)
             main.main_function()
-            df1=main.df
+            df1 = main.df
 
             df1_dict = df1.to_dict(orient='records')
             df1_json = json.dumps(df1_dict)
@@ -171,33 +168,52 @@ class FileUploadView(LoginRequiredMixin, View):
             request.session['df1'] = df1_json
             request.session['excel_download_path'] = excel_download_path
             request.session['excelfile_path'] = excelfile_path
-            
+
             pdf_file_path = str(pdf_file_path)
             file2 = str(file2.name)
-            return redirect('view_files', icm=icm, icm1=icm1, excel_download_path=excel_download_path, file2=file2,df1_json=df1_json,excelfile_path=excelfile_path)
+
+            ex_path = os.path.relpath(excel_download_path, settings.MEDIA_ROOT)
+            ex_dwn = os.path.relpath(excelfile_path, settings.MEDIA_ROOT)
+
+
+            print("yes check",excel_download_path)
+
+
+            file_name = excel_download_path.split('\\')[-1]
+            if file_name.endswith("uploaded_1"):
+                mr_dir = r"media\uploads\uploaded_1"
+            if file_name.endswith("uploaded_0"):
+                mr_dir = r"media\uploads\uploaded_0"
+
+            path_save = PathInformation(icm = icm, icm1 = icm1, excel_download = mr_dir, file = file2, df1_json = df1_json, excel_path = ex_dwn)
+            path_save.save()
+            return redirect('view_files',path_save.id)
         else:
             return HttpResponseBadRequest("Form data is not valid.")
 
 
 
-def view_files_view(request,icm,icm1,excel_download_path,file2,df1_json,excelfile_path):
+def view_files_view(request,id):
+    getData = PathInformation.objects.get(id = id)
+
+    print("excel_1111",getData)
     template_name = f'fileupload{sep}outputedit.html'
 
-    booking_conformation_pdf_path = os.path.join(excel_download_path, file2)
-    df1_json = df1_json
+    booking_conformation_pdf_path = os.path.join(getData.excel_download, getData.file)
+    df1_json = getData.df1_json
     df1_dict = json.loads(df1_json)
     df1 = pd.DataFrame(df1_dict)
 
-    obj = PDFExtractor(icm, icm1, booking_conformation_pdf_path)
+    obj = PDFExtractor(getData.icm, getData.icm1, booking_conformation_pdf_path)
     obj.extract_pdf_coordinates()
     df2_ = obj.df
 
     try:
         instance_var1 = ExcelProcessor()
-        df3 = instance_var1.process_all_excel_files(excel_download_path)
-        instance_var1.copy_and_format_data(excelfile_path)
+        df3 = instance_var1.process_all_excel_files(getData.excel_download)
+        instance_var1.copy_and_format_data(getData.excel_path)
         final_values = instance_var1.find_and_print_values('CONSIGNEE :','NOTIFY PARTY :','Shipper : ','Consignee : ', 'Notify : ','FREIGHT :　','Vessel : ','B/L ISSUE BY :')
-        instance_var1.extract_table_from_excel(excelfile_path)
+        instance_var1.extract_table_from_excel(getData.excel_path)
 
         shiper_from_excel = final_values[0] if len(final_values) > 0 else None
         consignee_from_excel = final_values[1] if len(final_values) > 1 else None
@@ -284,7 +300,7 @@ def view_files_view(request,icm,icm1,excel_download_path,file2,df1_json,excelfil
 
     return render(request, template_name, {'image_paths': image_paths, 'df1_html': df1_html,
                                             'df2_html': df2, 'df3_html': df3, 'columns':columns,
-                                            'icm':icm, 'icm1':icm1, 'context':context
+                                            'icm':getData.icm, 'icm1':getData.icm1, 'context':context
                                             })
                                                 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -531,20 +547,24 @@ class FileListView(View):
 
 
 
-def myfun(request,filename):
+def downloadfile(request,filename):
+    print("check file name",filename)
     try:
-        directory_path = r"C:\Users\ATLAnish\Desktop\Abi_projects\docre_5\Altdocre\business_logic\excel_extracter\Excel_output_files"
+        directory_path = r"business_logic\excel_extracter\Excel_output_files"
         
         file_path = os.path.join(directory_path, filename)
         
         with open(file_path, 'rb') as f:
             file_contents = f.read()
         response = HttpResponse(file_contents, content_type='application/vnd.ms-excel')
-        response['Content-Disposition'] = f'attachment; filename="DR-MSC-20240327-“MSC VIGOUR III” (V. HG410A-4444444444555.xlsx"'
+        response['Content-Disposition'] = f'attachment; filename="{filename}"'
         return response
 
     except FileNotFoundError:
         return HttpResponse("File not found", status=404)
+
+
+        
     except Exception as e:
         return HttpResponse(f"Error: {e}", status=500)
  
@@ -571,4 +591,3 @@ def search_files(request):
 
         })
     return JsonResponse(data, safe=False)
-        

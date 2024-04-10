@@ -24,6 +24,7 @@ class PDFExtractor:
         self.booking_Customer_name = booking_Customer_name
         self.booking_conformation_pdf = booking_conformation_pdf_path
         self.path = os.getcwd()
+        self.pdf_file = ''
 
     
     # --------- FOR TABLE DATA EXTRACTION --------- WORKING !!!!!!
@@ -40,6 +41,7 @@ class PDFExtractor:
                 print("MMMMMMMMMMMMpdf_infoMMMMMMMMMMMMM",pdf_info)
                 pdf_file = pdf_info["file_name"]
                 pdf_file_path = os.path.join(self.path, 'media','uploads', pdf_file)
+                self.pdf_file = pdf_file_path
 
                 try:
                     labels = []
@@ -97,7 +99,7 @@ class PDFExtractor:
     def pdf_to_images(self):
         # Open the PDF file
         try:
-            pdf_document = fitz.open(self.PDF_FILE_PATH)
+            pdf_document = fitz.open(self.pdf_file)
         except Exception as e:
             print(f"Error:{e}")
 

@@ -58,3 +58,12 @@ class SubmitUserInfo(models.Model):
     booking_no = models.CharField(max_length=50, null=True, blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
 
+
+class PathInformation(models.Model):
+    icm = models.CharField(max_length=50, null=True, blank=True)
+    icm1 = models.CharField(max_length=50, null=True, blank=True)
+    excel_download = models.CharField(max_length=100, null=True, blank=True)
+    file = models.CharField(max_length=100000, null=True, blank=True)
+    df1_json = models.CharField(max_length=100000, null=True, blank=True)
+    excel_path = models.CharField(max_length=500, null=True, blank=True)
+
